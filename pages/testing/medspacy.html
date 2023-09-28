@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="../../static/css/index.css">
+</head>
+
+<body>
+    <h1>NLP Community of Practice</h1>
+
+    <nav class="navbar navbar-expand-lg static-top">
+        <div class="container">
+            <a class="navbar-brand" href="../../index.html">
+                <img src="../../static/images/battelle_logo.png" alt="..." height="36">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="../../index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../../pages/agenda.html">Agendas</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../../pages/documents.html">Documents</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../../pages/resources.html">Resources</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../../pages/testing.html">Testing</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../../pages/usecases.html">Use Cases</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="content">
+        <p></p>
+        <h2>MedspaCy Pneumonia NLP</h2>
+        <p>
+            MedspaCy_pna is a natural language processing (NLP) package (implemented on [medspaCy](https://github.com/medspacy/medspacy)) which processes clinical text from the EHR to improve capture of diagnostic assertions for the identificaiton of pneumonia. This package can be used to test measures of diagnostic discordance in pneumonia among patients hospitalized from the Emergency Department (ED) that (1) increase awareness of the prevalence and potential impact of diagnostic discordance, (2) provide feedback to support learning and improvement of diagnostic skills, and (3) enable tracking of interventions, thereby improving diagnosis, patient outcomes and patient experience.
+        </p>
+        <p>
+            This work was published in December 2022 in JAMIA Open: ["Development and evaluation of an interoperable natural language processing system for identifying pneumonia across clinical settings of care and institutions"](https://academic.oup.com/jamiaopen/article/5/4/ooac114/6965695?login=false). Supplemental materials for the manuscript can be found on the journal webiste or here under supplemental_materials/. All code necessary for implementation, along with examples of rules and detailed explanations of each component, is publicly available on [GitHub](https://github.com/abchapman93/medspacy_pneumonia).
+        </p>
+
+        <h2>Installation of MedspaCy Pneumonia NLP</h2>
+        <p>First of all, MedspaCy needs to be run under Python 3.8. A conda environment with Python 3.8 can be created by</p>
+        <code>conda create --name [env__name] Python=3.8</code>
+        <p>Second, MedspaCy_pna is implenmented on MedspaCy==0.2.0.0. (MedspaCy with version 0.2.0.0). To install MedspaCy, we need to install the following requirements first:</p>
+        <ul>
+            <li>ipywidgets</li>
+            <li>pyodbc</li>
+            <li>jupyterlab</li>
+            <li>nltk</li>
+            <li>pandas</li>
+            <li>pytest</li>
+        </ul>
+        <p>We also need to installed the following two packages with a certain version:</p>
+        <ul>
+            <li>spaCy >=3.1,<3.2</li>
+            <li><a href="https://github.com/medspacy/PyRuSH">pyrush</a>==1.0.3.6</li>
+            <ul><li>Can be downloaded <a href="https://pypi.org/project/PyRuSH/1.0.3.6/#files">here</a></li></ul>
+        </ul>
+        <code>pip install PyRuSH-1.0.3.6-cp38-cp38-win_amd64.whl</code>
+        <p>Then, we can isntall MedspaCy==0.2.0.0.</p>
+        <code>pip install medspacy==0.2.0.0</code>
+        <p>Next step is to install MedspaCy_pna by</p>
+        <code>pip install medspacy_pna</code>
+        <p>You will also need to install spaCy's `en_core_web_sm` model (or specify a different model when loading the NLP)</p>
+        <code>python -m spacy download en_core_web_sm</code>
+
+        <h2>Usage</h2>
+        <p>See <a href="https://github.com/abchapman93/medspacy_pneumonia">https://github.com/abchapman93/medspacy_pneumonia</a> for more details.</p>
+        <code>from medspacy_pna import build_nlp <br/>from medspacy_pna.display import create_html<br/>from IPython.display import HTML</code>
+
+        <h2>Load a model specific to either "emergency", "radiology", or "discharge"</h2>
+        <code>nlp_emergency = build_nlp(domain="emergency")
+            <br/>note_emergency = """
+            <br/>History of Present Illness: Patient presents to ED with cough and fever.
+            <br/>Medical decision making: Differential diagnoses include pna and CHF.
+            <br/>Will order a chest x-ray to r/o pneumonia.
+            <br/>"""
+            <br/>doc_emergency = nlp_emergency(note_emergency)
+            <br/>HTML(create_html(doc_emergency, "emergency", document_classification=True))</code>
+
+
+    </div>
+</body>
+
+</html>
